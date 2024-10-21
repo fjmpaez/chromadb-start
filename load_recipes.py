@@ -16,7 +16,7 @@ if __name__ == '__main__':
     parser.add_argument('--openai_embedding', action='store_true', help='Use OpenAI embeddings')
     args = parser.parse_args()
 
-    dotenv.load_dotenv(dotenv_path=f"{base_dir}/.env")
+    dotenv.load_dotenv()
 
     documents = load_documents(args.source)
     chunked_documents = split_documents(documents, size=2000, overlap=20)

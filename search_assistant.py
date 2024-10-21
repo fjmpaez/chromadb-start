@@ -1,5 +1,4 @@
 import argparse
-import pathlib
 
 import chromadb
 import dotenv
@@ -13,8 +12,7 @@ def main():
     parser.add_argument('--openai_embedding', action='store_true', help='Use OpenAI embeddings')
     args = parser.parse_args()
 
-    base_dir = pathlib.Path(__file__).parent.resolve()
-    dotenv.load_dotenv(dotenv_path=f"{base_dir}/.env")
+    dotenv.load_dotenv()
     openai_api_key = os.getenv("OPENAI_API_KEY")
 
     chroma_client = chromadb.HttpClient(host='localhost', port=8000)
