@@ -1,6 +1,3 @@
-from sympy.physics.units import power
-
-
 def get_persistent_client(database_folder):
     import chromadb
     return chromadb.PersistentClient(path=database_folder)

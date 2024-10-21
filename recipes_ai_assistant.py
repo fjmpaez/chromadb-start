@@ -6,12 +6,10 @@ import os
 
 from chromadb.utils import embedding_functions
 from langchain.agents.agent_toolkits import create_conversational_retrieval_agent
-from langchain.memory import ConversationBufferMemory
 from langchain_chroma import Chroma
 from langchain_core.messages import SystemMessage
 from langchain_core.tools import create_retriever_tool
-from langchain_openai import ChatOpenAI
-from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
 system_prompt = """
 You are a helpful recipes assistant designed to help clients to find recipes.
@@ -40,12 +38,6 @@ def main():
         embedding_function=embedding_function
     )
 
-    memory = ConversationBufferMemory(
-        return_messages=True,
-        memory_key="chat_history",
-        output_key="output"
-    )
-
     llm = ChatOpenAI(openai_api_key=openai_api_key, model="gpt-4")
     tools = [
         create_retriever_tool(
@@ -55,8 +47,7 @@ def main():
         )
     ]
 
-    agent = create_conversational_retrieval_agent(llm, tools, memory_key='chat_history', verbose=True,
-                                                  system_message=SystemMessage(content=system_prompt))
+    agent = create_conversational_retrieval_agent(llm, tools, verbose=True, system_message=SystemMessage(content=system_prompt))
 
     while True:
         user_input = input(f"({collection_name})-> Cliente: ")
